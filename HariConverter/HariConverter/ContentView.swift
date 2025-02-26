@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct ContentView: View {
@@ -77,6 +76,9 @@ struct ContentView: View {
                             .symbolEffect(.pulse)
                     }
                     .padding(.trailing)
+                    .sheet(isPresented: $showExchangeInfor) {
+                        InfoView()
+                    }
             
                 }
             }
