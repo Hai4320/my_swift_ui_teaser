@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct InfoView: View {
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         ZStack {
             Image(.parchment)
@@ -19,7 +21,7 @@ struct InfoView: View {
                 ExchangeInfoItem(imageLeft: .silverpiece, imageRight: .silverpenny, content: "1 Silver Penny = 4 Silver Pennies")
                 ExchangeInfoItem(imageLeft: .silverpenny, imageRight: .copperpenny, content: "1 Silver Penny = 100 Copper Pennies")
                 Button("OK") {
-                    
+                    dismiss()
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.brown.mix(with: .black, by: 0.2))
