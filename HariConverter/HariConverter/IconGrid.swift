@@ -8,21 +8,28 @@
 import SwiftUI
 
 struct IconGrid: View {
-    let currency: Currency
+    let selectedCurrency: Currency?
     var body: some View {
         HStack {
-            Image(imageLeft)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 30)
-            Text(content)
-            Image(imageRight)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 30)
+            LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
+                ForEach(Currency.allCases) { currency in
+                    if (currency != selectedCurrency) {
+                        ExchangeIcon(icon: currency.image, name: currency.name)
+                    } else {
+                        ExchangeIcon(icon: currency.image, name: currency.name)
+                            .shadow(radius: 10)
+                            .overlay{
+                                RoundedRectangle(cornerRadius: 10)
+                                    .background(.black)
+                                    .opacity(0.4)
+                            }
+                    }
+                    
+                }
+            }
         }
     }
 }
 #Preview {
-    ExchangeInfoItem(imageLeft: .goldpiece, imageRight: .goldpenny, content: "1 Gold Piece = 4 Gold Pennies")
+    IconGrid(selectedCurrency: Currency.goldPenny)
 }
