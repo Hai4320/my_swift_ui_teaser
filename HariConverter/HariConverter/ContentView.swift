@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 
 struct ContentView: View {
     @State private var showExchangeInfor = false
@@ -10,6 +11,8 @@ struct ContentView: View {
     @FocusState private var exchangeTyping
     @State var fromCurrency = Currency.goldPenny
     @State var toCurrency = Currency.silverPenny
+    
+    let currencyTip = CurrencyTip()
 
     var body: some View {
         ZStack {
@@ -38,7 +41,9 @@ struct ContentView: View {
                         }
                         .onTapGesture {
                             showSelectCurrency.toggle()
+                            currencyTip.invalidate(reason: .actionPerformed)
                         }
+                        .popoverTip(currencyTip, arrowEdge:  .bottom)
                         TextField("Amount", text: $currentAmount)
                             .focused($currentTyping)
                             .textFieldStyle(.roundedBorder)
@@ -49,6 +54,8 @@ struct ContentView: View {
                                     exchangeAmount = fromCurrency.convert(amountString: currentAmount, currency: toCurrency)
                                 }
                             }
+                            .keyboardType(.decimalPad)
+                            .clipShape(.capsule)
                     }
 
                     Image(systemName: "equal")
@@ -80,6 +87,8 @@ struct ContentView: View {
                                     currentAmount = toCurrency.convert(amountString: exchangeAmount, currency: fromCurrency)
                                 }
                             }
+                            .keyboardType(.decimalPad)
+                            .clipShape(.capsule)
                     }
                 }
                 .padding()
@@ -103,11 +112,20 @@ struct ContentView: View {
                 }
             }
         }
+        .task {
+            try? Tips.configure()
+        }
         .sheet(isPresented: $showExchangeInfor) {
             InfoView()
         }
         .sheet(isPresented: $showSelectCurrency) {
-            SelectCurrency(selectedFromCurrency: fromCurrency, selectedToCurrency: toCurrency)
+            SelectCurrency(selectedFromCurrency: $fromCurrency, selectedToCurrency: $toCurrency)
+        }
+        .onChange(of: fromCurrency) {
+            exchangeAmount = fromCurrency.convert(amountString: currentAmount, currency: toCurrency)
+        }
+        .onChange(of: toCurrency) {
+            currentAmount = toCurrency.convert(amountString: exchangeAmount, currency: fromCurrency)
         }
     }
 }

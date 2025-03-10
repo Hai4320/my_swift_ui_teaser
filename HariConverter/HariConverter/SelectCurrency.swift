@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SelectCurrency: View {
     @Environment(\.dismiss) var dismiss
-    @State var selectedFromCurrency: Currency
-    @State var selectedToCurrency: Currency
+    @Binding var selectedFromCurrency: Currency
+    @Binding var selectedToCurrency: Currency
     
     var body: some View {
         ZStack {
@@ -15,11 +15,11 @@ struct SelectCurrency: View {
                 Text("Exchange from:")
                     .font(.title)
                     .tracking(3)
-                IconGrid(selectedCurrency: selectedFromCurrency)
+                IconGrid(selectedCurrency: $selectedFromCurrency)
                 Text("Exchange to:")
                     .font(.title)
                     .tracking(3)
-                IconGrid(selectedCurrency: selectedToCurrency)
+                IconGrid(selectedCurrency: $selectedToCurrency)
                
                 Button("OK") {
                     dismiss()
@@ -34,5 +34,9 @@ struct SelectCurrency: View {
 
 
 #Preview {
-    SelectCurrency(selectedFromCurrency: .goldPenny, selectedToCurrency: .silverPenny)
+    
+    @Previewable  @State var selectedFromCurrency =  Currency.copperPenny
+    @Previewable @State var selectedToCurrency =  Currency.goldPenny
+    
+    SelectCurrency(selectedFromCurrency: $selectedFromCurrency, selectedToCurrency: $selectedToCurrency)
 }
