@@ -6,12 +6,7 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		842052262D719D1100E2C494 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842052252D719D0800E2C494 /* Currency.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		842052252D719D0800E2C494 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		8477F8B22D6DB04C009060D3 /* HariConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HariConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,7 +32,6 @@
 		8477F8A92D6DB04C009060D3 = {
 			isa = PBXGroup;
 			children = (
-				842052252D719D0800E2C494 /* Currency.swift */,
 				8477F8B42D6DB04C009060D3 /* HariConverter */,
 				8477F8B32D6DB04C009060D3 /* Products */,
 			);
@@ -125,7 +119,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842052262D719D1100E2C494 /* Currency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

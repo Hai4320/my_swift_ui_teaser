@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct IconGrid: View {
-    let selectedCurrency: Currency?
+    @State var selectedCurrency: Currency?
     var body: some View {
         HStack {
             LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
                 ForEach(Currency.allCases) { currency in
                     if (currency != selectedCurrency) {
                         ExchangeIcon(icon: currency.image, name: currency.name)
+                            .onTapGesture {
+                                selectedCurrency = currency
+                            }
                     } else {
                         ExchangeIcon(icon: currency.image, name: currency.name)
                             .shadow(radius: 10)

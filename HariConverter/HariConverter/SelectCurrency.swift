@@ -2,7 +2,9 @@ import SwiftUI
 
 struct SelectCurrency: View {
     @Environment(\.dismiss) var dismiss
-    @State var selectedCurrency: Currency?
+    @State var selectedFromCurrency: Currency
+    @State var selectedToCurrency: Currency
+    
     var body: some View {
         ZStack {
             Image(.parchment)
@@ -13,12 +15,12 @@ struct SelectCurrency: View {
                 Text("Exchange from:")
                     .font(.title)
                     .tracking(3)
+                IconGrid(selectedCurrency: selectedFromCurrency)
                 Text("Exchange to:")
                     .font(.title)
                     .tracking(3)
-                
+                IconGrid(selectedCurrency: selectedToCurrency)
                
-              
                 Button("OK") {
                     dismiss()
                 }
@@ -32,5 +34,5 @@ struct SelectCurrency: View {
 
 
 #Preview {
-    SelectCurrency(selectedCurrency: .goldPenny)
+    SelectCurrency(selectedFromCurrency: .goldPenny, selectedToCurrency: .silverPenny)
 }

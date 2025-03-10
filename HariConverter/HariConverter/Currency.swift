@@ -13,7 +13,7 @@ enum Currency : Double, CaseIterable, Identifiable {
     
     var image: ImageResource {
         switch self {
-
+            
         case .copperPenny:
                 .copperpenny
         case .silverPiece:
@@ -31,16 +31,24 @@ enum Currency : Double, CaseIterable, Identifiable {
         switch self {
             
         case .copperPenny:
-                "Copper Penny"
+            "Copper Penny"
         case .silverPiece:
-                "Silver Piece"
+            "Silver Piece"
         case .silverPenny:
-                "Silver Penny"
+            "Silver Penny"
         case .goldPiece:
-                "Gold Piece"
+            "Gold Piece"
         case .goldPenny:
-                "Gold Penny"
+            "Gold Penny"
         }
+    }
+    
+    func convert(amountString: String, currency: Currency) -> String {
+        guard let amount = Double(amountString) else {
+            return ""
+        }
+        let result = amount / self.rawValue * currency.rawValue
+        return String(format: "%.2f", result)
     }
 
 }

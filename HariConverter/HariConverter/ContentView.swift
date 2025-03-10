@@ -2,9 +2,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showExchangeInfor = false
+    @State private var showSelectCurrency = false
     @State private var exchangeRate = 0.0
     @State private var currentAmount = ""
     @State private var exchangeAmount = ""
+    @FocusState private var currentTyping
+    @FocusState private var exchangeTyping
+    @State var fromCurrency = Currency.goldPenny
+    @State var toCurrency = Currency.silverPenny
 
     var body: some View {
         ZStack {
@@ -23,18 +28,27 @@ struct ContentView: View {
                 VStack{
                     VStack {
                         HStack {
-                            Image(.silverpiece)
+                            Image(fromCurrency.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 40)
-                            Text("silver piece")
+                            Text(fromCurrency.name)
                                 .foregroundStyle(.white)
                                 .font(.headline)
                         }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
+                        }
                         TextField("Amount", text: $currentAmount)
+                            .focused($currentTyping)
                             .textFieldStyle(.roundedBorder)
                             .padding(.horizontal)
                             .multilineTextAlignment(.center)
+                            .onChange(of: currentAmount) {
+                                if currentTyping == true {
+                                    exchangeAmount = fromCurrency.convert(amountString: currentAmount, currency: toCurrency)
+                                }
+                            }
                     }
 
                     Image(systemName: "equal")
@@ -44,19 +58,28 @@ struct ContentView: View {
                         .padding()
                     VStack {
                         HStack {
-                            Image(.goldpiece)
+                            Image(toCurrency.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 40)
-                            Text("gold piece")
+                            Text(toCurrency.name)
                                 .foregroundStyle(.white)
                                 .font(.headline)
                         }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
+                        }
                         TextField("Amount", text: $exchangeAmount)
+                            .focused($exchangeTyping)
                             .textFieldStyle(.roundedBorder)
                             .padding(.horizontal)
                             .padding(.bottom)
                             .multilineTextAlignment(.center)
+                            .onChange(of: exchangeAmount) {
+                                if exchangeTyping == true {
+                                    currentAmount = toCurrency.convert(amountString: exchangeAmount, currency: fromCurrency)
+                                }
+                            }
                     }
                 }
                 .padding()
@@ -76,12 +99,15 @@ struct ContentView: View {
                             .symbolEffect(.pulse)
                     }
                     .padding(.trailing)
-                    .sheet(isPresented: $showExchangeInfor) {
-                        InfoView()
-                    }
             
                 }
             }
+        }
+        .sheet(isPresented: $showExchangeInfor) {
+            InfoView()
+        }
+        .sheet(isPresented: $showSelectCurrency) {
+            SelectCurrency(selectedFromCurrency: fromCurrency, selectedToCurrency: toCurrency)
         }
     }
 }
