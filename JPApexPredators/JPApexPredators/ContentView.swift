@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     let predators = Predators()
@@ -28,9 +29,7 @@ struct ContentView: View {
                 
                 List(filteredPredators) { p in
                     NavigationLink{
-                        Image(p.image)
-                            .resizable()
-                            .scaledToFit()
+                        PredatorDetail(predator: p, position: .camera(MapCamera(centerCoordinate: p.location, distance: 30000)))
                     } label: {
                     HStack {
                         Image(p.image)
@@ -65,7 +64,7 @@ struct ContentView: View {
                         } label: {
                             Image(systemName: alphebetical ? "film" : "textformat")
                                 .symbolEffect(.bounce, value: alphebetical)
-                                .foregroundStyle(.white)
+            
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
@@ -77,7 +76,6 @@ struct ContentView: View {
                             }
                         } label: {
                             Image(systemName: "slider.horizontal.3")
-                                .foregroundStyle(.white)
                         }
                     }
                 }
