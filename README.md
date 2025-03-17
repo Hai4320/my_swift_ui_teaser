@@ -2,8 +2,14 @@
 Learn and use SwifUI 6
 1. Exchange App 
 
-![DEMO](screenshots/exchange.mp4)
+<video width="600" controls>
+  <source src="screenshots/exchange.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 2. ApexPredator App
 
-![DEMO](screenshots/apex.mp4)
+<video width="600" controls>
+  <source src="screenshots/apex.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
