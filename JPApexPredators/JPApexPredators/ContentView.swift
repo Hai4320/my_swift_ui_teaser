@@ -26,7 +26,6 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack{
-                
                 List(filteredPredators) { p in
                     NavigationLink{
                         PredatorDetail(predator: p, position: .camera(MapCamera(centerCoordinate: p.location, distance: 30000)))
